@@ -106,13 +106,12 @@ public class LoggedWindow extends JFrame implements Handle{
         if(data.contains("LOGOUT")) {
             try {
                 client.closeSocket();
-                JOptionPane.showMessageDialog(jFrame, "Logged out correctly", "Information", JOptionPane.INFORMATION_MESSAGE);
-                dispose();
-                LoggingWindow loggingWindow = new LoggingWindow();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            JOptionPane.showMessageDialog(jFrame, "Logged out correctly", "Information", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            LoggingWindow loggingWindow = new LoggingWindow();
         }
         else if (data.contentEquals("TRANSFER DONE")){
             JOptionPane.showMessageDialog(jFrame, "Done transfer correctly", "Information", JOptionPane.INFORMATION_MESSAGE);
@@ -128,6 +127,9 @@ public class LoggedWindow extends JFrame implements Handle{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                JOptionPane.showMessageDialog(jFrame, data, "ERROR", JOptionPane.ERROR_MESSAGE);
+                dispose();
+                LoggingWindow loggingWindow = new LoggingWindow();
             }
             else
                 JOptionPane.showMessageDialog(jFrame, data, "ERROR", JOptionPane.ERROR_MESSAGE);
