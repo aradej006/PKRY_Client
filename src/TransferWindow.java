@@ -19,7 +19,7 @@ public class TransferWindow extends JFrame{
 
     private JFrame jFrame;
 
-    public TransferWindow(Client client1, String login1, String sessionID1){
+    public TransferWindow(Client client1, String login1, String sessionID1, JFrame jFrame1){
         super("Okno przelewów");
         setContentPane(mainPanel);
         pack();
@@ -29,7 +29,7 @@ public class TransferWindow extends JFrame{
         this.client = client1;
         this.login = login1;
         this.sessionID = sessionID1;
-        jFrame = this;
+        jFrame = jFrame1;
 
         doTransferButton.addActionListener(new ActionListener() {
             @Override

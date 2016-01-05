@@ -59,7 +59,7 @@ public class LoggedWindow extends JFrame implements Handle{
         doTransferButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TransferWindow transferWindow = new TransferWindow(client,login,sessionID);
+                TransferWindow transferWindow = new TransferWindow(client,login,sessionID,jFrame);
             }
         });
     }
