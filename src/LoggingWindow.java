@@ -43,7 +43,6 @@ public class LoggingWindow extends JFrame implements Handle {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 textArea1.setText(null);
                 login = JOptionPane.showInputDialog(null, "Enter Login: ");
 

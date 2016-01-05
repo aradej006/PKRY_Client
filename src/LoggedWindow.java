@@ -1,7 +1,5 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +15,7 @@ public class LoggedWindow extends JFrame implements Handle{
     private JLabel label1;
     private JScrollPane scrollPane1;
     private JButton refreshAccountInfoButton;
+    private JButton doTransferButton;
     private DefaultTableModel defaultTableModel;
 
     private String login;
@@ -54,6 +53,12 @@ public class LoggedWindow extends JFrame implements Handle{
                 client.sendData("getaccount" + " " + login + " " + sessionID);
             }
         });
+        doTransferButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TransferWindow transferWindow = new TransferWindow(client,login,sessionID);
+            }
+        });
     }
 
     public void makeTable(DefaultTableModel defaultTableModel, String data){
@@ -83,7 +88,8 @@ public class LoggedWindow extends JFrame implements Handle{
                 e.printStackTrace();
             }
         }
-        else if (data.contentEquals("TransferSuccess")){
+        else if (data.contentEquals("transferok")){
+            JOptionPane.showConfirmDialog(null, "Poprawnie wykonano przelew", "Powiadomienie", JOptionPane.DEFAULT_OPTION);
         }
         else if (data.contains("account")){
             makeTable(defaultTableModel,data);
