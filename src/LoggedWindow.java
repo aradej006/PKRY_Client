@@ -38,12 +38,14 @@ public class LoggedWindow extends JFrame implements Handle{
         label1.setText("Logged in as: " + login);
 
         defaultTableModel = new DefaultTableModel();
+        defaultTableModel.addColumn("Dane konta");
+        defaultTableModel.addColumn("Wartości");
         table1.setModel(defaultTableModel);
 
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                client.sendData("Logout" + " " + login);
+                client.sendData("Logout" + " " + login + " " + sessionID);
             }
         });
         refreshAccountInfoButton.addActionListener(new ActionListener() {
@@ -55,11 +57,17 @@ public class LoggedWindow extends JFrame implements Handle{
     }
 
     public void makeTable(DefaultTableModel defaultTableModel, String data){
-        String[] array = data.split(" ");
-        table1.setModel(defaultTableModel);
+
+        defaultTableModel = new DefaultTableModel();
         defaultTableModel.addColumn("Dane konta");
+        defaultTableModel.addColumn("Wartości");
+        table1.setModel(defaultTableModel);
+
+        String[] array = data.split(" ");
+        String[] infoArray = {"Balance","Currency","Number","FirstName","LastName"};
+
         for(int i=1;i<array.length;i++){
-            defaultTableModel.addRow(new Object[]{array[i]});
+            defaultTableModel.addRow(new Object[]{infoArray[i-1],array[i]});
         }
     }
 
