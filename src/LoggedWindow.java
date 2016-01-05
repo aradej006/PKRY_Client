@@ -18,15 +18,17 @@ public class LoggedWindow extends JFrame implements Handle{
     private JScrollPane scrollPane1;
     private Client client;
     private String startData;
+    private String login;
 
-    public LoggedWindow(String login, Client client, String startData){
+    public LoggedWindow(String login1, Client client1, String startData){
         super("LoggedWindow");
         setContentPane(mainPanel);
         pack();
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.client = client;
+        this.login = login1;
+        this.client = client1;
         this.client.changeHandle(this);
         this.startData = startData;
         label1.setForeground(Color.red);
