@@ -3,6 +3,8 @@ import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 /**
@@ -30,7 +32,7 @@ public class LoggingWindow extends JFrame implements Handle {
         setContentPane(mainPanel);
         pack();
         setVisible(true);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         list1.addSelectionInterval(1, 1);
         loggedLabel.setForeground(Color.red);
@@ -42,6 +44,18 @@ public class LoggingWindow extends JFrame implements Handle {
         } catch (Exception err) {
             err.printStackTrace();
         }
+
+        jFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    client.closeSocket();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                super.windowClosing(e);
+            }
+        });
 
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -142,7 +156,7 @@ public class LoggingWindow extends JFrame implements Handle {
                 textArea1.setText("Error - you clicked cancel");
             }
             passwordField1.setText(null);
-            message = "Bad Password. Enter Password letters again:\n";
+            message = "Enter password again:";
         }
         return response;
     }
@@ -176,7 +190,7 @@ public class LoggingWindow extends JFrame implements Handle {
                 textArea1.setText("Error - you did not enter numbers");
             }
             passwordField1.setText(null);
-            message = "Bad PESEL numbers. Enter PESEL numbers again:\n";
+            message = "Enter numbers again:";
         }
         return response;
     }
