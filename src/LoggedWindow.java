@@ -16,9 +16,10 @@ public class LoggedWindow extends JFrame implements Handle{
     private JButton logoutButton;
     private JLabel label1;
     private JScrollPane scrollPane1;
-    private Client client;
-    private String startData;
+
     private String login;
+
+    private Client client;
 
     public LoggedWindow(String login1, Client client1, String startData){
         super("LoggedWindow");
@@ -30,7 +31,6 @@ public class LoggedWindow extends JFrame implements Handle{
         this.login = login1;
         this.client = client1;
         this.client.changeHandle(this);
-        this.startData = startData;
         label1.setForeground(Color.red);
         label1.setText("Logged in as: " + login);
 
@@ -44,12 +44,21 @@ public class LoggedWindow extends JFrame implements Handle{
             }
         });
     }
-    public void makeTable(DefaultTableModel defaultTableModel, String data){
+
+    public void makeTable(DefaultTableModel defaultTableModel, String startData){
+        String[] array = startData.split(":");
         table1.setModel(defaultTableModel);
+
+//        for(String data : array){
+//            defaultTableModel.addColumn(data.split(" ")[0]);
+//            defaultTableModel.addRow(new Object[]{data.split(" ")[1]});
+//        }
+        
         defaultTableModel.addColumn("Column1");
         defaultTableModel.addColumn("Column2");
         defaultTableModel.addRow(new Object[]{"Coś tam"});
     }
+
     public String handle(String data) {
         if(data.contains("LOGOUT")) {
             try {
@@ -62,8 +71,7 @@ public class LoggedWindow extends JFrame implements Handle{
                 e.printStackTrace();
             }
         }
-        else if (data.contentEquals("TransferSucceded")){
-
+        else if (data.contentEquals("TransferSuccess")){
         }
         return null;
     }

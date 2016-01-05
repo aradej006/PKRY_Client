@@ -7,5 +7,4 @@ public class TProtocol {
     static final String STOP = "stop";
     static final String STOPPED = "stopped";
     static final String NULLCOMMAND = "nullcommand";
-
 }

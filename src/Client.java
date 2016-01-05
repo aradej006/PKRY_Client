@@ -30,7 +30,6 @@ public class Client implements Runnable {
         this.handle = handle;
         socket = null;
         try {
-//            socket = new Socket(host, port);
             SSLSocketFactory socketfactory =(SSLSocketFactory) SSLSocketFactory.getDefault();
             socket = (SSLSocket) socketfactory.createSocket(host,port);
         } catch (UnknownHostException e) {
@@ -63,13 +62,11 @@ public class Client implements Runnable {
                 }
             } catch (IOException e) {
             }
-
         output = null;
         input = null;
         synchronized (this) {
             socket = null;
         }
-
     }
 
     private synchronized boolean handleCommand(String command) {
@@ -104,6 +101,7 @@ public class Client implements Runnable {
         if (socket != null)
             send(TProtocol.LOGOUT);
     }
+
     public void closeSocket() throws IOException {
         try {
             send(TProtocol.LOGOUT);
@@ -112,6 +110,7 @@ public class Client implements Runnable {
             e.printStackTrace();
         }
     }
+
     public void changeHandle(Handle handle){
         this.handle = handle;
     }

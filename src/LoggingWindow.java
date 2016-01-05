@@ -15,15 +15,10 @@ public class LoggingWindow extends JFrame implements Handle {
     private JLabel loggedLabel;
     private JTextArea textArea1;
     private JPasswordField passwordField1 = new JPasswordField();
+
     private String login = null;
     private String password = null;
     private String passwordIndexes = null;
-    private String peselIndexes = null;
-    private String peselNumbers = null;
-
-    private boolean haveLogin = false;
-    private boolean havePassword = false;
-    private boolean haveNumbers = false;
 
     private Client client;
 
@@ -50,10 +45,6 @@ public class LoggingWindow extends JFrame implements Handle {
 
                 textArea1.setText(null);
                 login = JOptionPane.showInputDialog(null, "Enter Login: ");
-                if (!login.equals("")) {
-                    System.err.println("You entered: " + login);
-                } else
-                    textArea1.setText("Błąd");
 
                 if (!login.equals(""))
                     if (login.length() <= 2)
@@ -61,21 +52,16 @@ public class LoggingWindow extends JFrame implements Handle {
                     else {
                         list1.clearSelection();
                         list1.addSelectionInterval(2, 2);
-                        haveLogin = true;
-
                         client.sendData("Login" + " " + login);
-                        textArea1.setText("Sended to server");
+                        textArea1.setText("Sent to server");
                     }
                 else
                     textArea1.setText("Błąd. Nie podałeś loginu");
             }
         });
-
     }
 
     public String handle(String data) {
-
-        //System.out.println("RECIEVED " + data);
         if(data.contains("ERROR")){
             textArea1.setText("Message from server: \n");
             textArea1.append(data);
@@ -84,8 +70,7 @@ public class LoggingWindow extends JFrame implements Handle {
         }
         else
             if (data.contains("PasswordIndexes")) {
-
-                passwordIndexes = data.split(" ")[1];
+                String passwordIndexes = data.split(" ")[1];
                 list1.clearSelection();
                 list1.addSelectionInterval(3, 3);
 
@@ -96,58 +81,48 @@ public class LoggingWindow extends JFrame implements Handle {
                     list1.clearSelection();
                     list1.addSelectionInterval(4, 4);
                 }
-
             } else if (data.contains("PESELIndexes")) {
-                peselIndexes = data.split(" ")[1];
+                String peselIndexes = data.split(" ")[1];
                 list1.clearSelection();
                 list1.addSelectionInterval(5, 5);
 
-                peselNumbers = getPeselNumbers(peselIndexes);
+                String peselNumbers = getPeselNumbers(peselIndexes);
 
                 if(peselNumbers != null){
                     client.sendData("PESELNumbers" + " " + login + " " + password + " " + passwordIndexes + " " + peselNumbers + " " + peselIndexes);
                     list1.clearSelection();
                     list1.addSelectionInterval(6, 6);
-                    textArea1.setText("Sended to server");
+                    textArea1.setText("Sent to server");
                 }
-
-
             } else if (data.contains("LoggedIn")) {
                 dispose();
                 LoggedWindow loggedWindow = new LoggedWindow(login, client, data);
             }
-
         return null;
     }
 
     public String getPassword(String indexes) {
         String response = null;
         textArea1.setText(null);
-
         String password = "";
+
         int ok = JOptionPane.showConfirmDialog(null, passwordField1, "Enter Password letters: " + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
         if (ok == JOptionPane.OK_OPTION) {
             password = new String(passwordField1.getPassword());
-            System.err.println("You entered: " + password);
-
-            havePassword = true;
         } else {
             list1.addSelectionInterval(1, 1);
             textArea1.setText("Błąd - kliknąłeś cancel");
         }
 
-
         if (!password.equals("")) {
-            // będę wysyłał
             response = password;
-            textArea1.setText("Sended to server");
-
+            textArea1.setText("Sent to server");
         } else {
             list1.clearSelection();
             list1.addSelectionInterval(1, 1);
             textArea1.setText("Błąd - nie wpisałeś hasła");
         }
-
         passwordField1.setText(null);
 
         return response;
@@ -155,16 +130,13 @@ public class LoggingWindow extends JFrame implements Handle {
 
     public String getPeselNumbers(String indexes) {
         String response = null;
-
         textArea1.setText(null);
         String numbers = "";
+
         int ok = JOptionPane.showConfirmDialog(null, passwordField1, "Enter PESEL Nummbers: " + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (ok == JOptionPane.OK_OPTION) {
             numbers = new String(passwordField1.getPassword());
-            System.err.println("You entered: " + numbers);
-
-            haveNumbers = true;
         } else {
             list1.clearSelection();
             list1.addSelectionInterval(1, 1);
@@ -173,7 +145,6 @@ public class LoggingWindow extends JFrame implements Handle {
 
         if (!numbers.equals("")) {
             response = numbers;
-
         } else {
             list1.clearSelection();
             list1.addSelectionInterval(1, 1);
