@@ -16,12 +16,14 @@ public class LoggedWindow extends JFrame implements Handle{
     private JButton logoutButton;
     private JLabel label1;
     private JScrollPane scrollPane1;
+    private JButton refreshAccountInfoButton;
+    private DefaultTableModel defaultTableModel;
 
     private String login;
-
+    private String sessionID;
     private Client client;
 
-    public LoggedWindow(String login1, Client client1, String startData){
+    public LoggedWindow(String login1, Client client1, String sessionid){
         super("LoggedWindow");
         setContentPane(mainPanel);
         pack();
@@ -30,12 +32,13 @@ public class LoggedWindow extends JFrame implements Handle{
 
         this.login = login1;
         this.client = client1;
+        this.sessionID = sessionid;
         this.client.changeHandle(this);
         label1.setForeground(Color.red);
         label1.setText("Logged in as: " + login);
 
-        DefaultTableModel defaultTableModel = new DefaultTableModel();
-        makeTable(defaultTableModel,startData);
+        defaultTableModel = new DefaultTableModel();
+        table1.setModel(defaultTableModel);
 
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -43,20 +46,21 @@ public class LoggedWindow extends JFrame implements Handle{
                 client.sendData("Logout" + " " + login);
             }
         });
+        refreshAccountInfoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                client.sendData("getaccount" + " " + login + " " + sessionID);
+            }
+        });
     }
 
-    public void makeTable(DefaultTableModel defaultTableModel, String startData){
-        String[] array = startData.split(":");
+    public void makeTable(DefaultTableModel defaultTableModel, String data){
+        String[] array = data.split(" ");
         table1.setModel(defaultTableModel);
-
-//        for(String data : array){
-//            defaultTableModel.addColumn(data.split(" ")[0]);
-//            defaultTableModel.addRow(new Object[]{data.split(" ")[1]});
-//        }
-        
-        defaultTableModel.addColumn("Column1");
-        defaultTableModel.addColumn("Column2");
-        defaultTableModel.addRow(new Object[]{"Coś tam"});
+        defaultTableModel.addColumn("Dane konta");
+        for(int i=1;i<array.length;i++){
+            defaultTableModel.addRow(new Object[]{array[i]});
+        }
     }
 
     public String handle(String data) {
@@ -72,6 +76,9 @@ public class LoggedWindow extends JFrame implements Handle{
             }
         }
         else if (data.contentEquals("TransferSuccess")){
+        }
+        else if (data.contains("account")){
+            makeTable(defaultTableModel,data);
         }
         return null;
     }

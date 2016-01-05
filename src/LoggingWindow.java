@@ -97,7 +97,7 @@ public class LoggingWindow extends JFrame implements Handle {
                 }
             } else if (data.contains("LoggedIn")) {
                 dispose();
-                LoggedWindow loggedWindow = new LoggedWindow(login, client, data);
+                LoggedWindow loggedWindow = new LoggedWindow(login, client, data.split(" ")[1]);
             }
         return null;
     }
