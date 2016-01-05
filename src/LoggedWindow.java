@@ -122,7 +122,15 @@ public class LoggedWindow extends JFrame implements Handle{
         }else if (data.contains("history")) {
             makeHistoryTable(data);
         }else if (data.contains("ERROR")){
-            JOptionPane.showMessageDialog(jFrame, data, "ERROR", JOptionPane.ERROR_MESSAGE);
+            if(data.equals("ERROR SESSION EXPIRED")){
+                try {
+                    client.closeSocket();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else
+                JOptionPane.showMessageDialog(jFrame, data, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
