@@ -27,7 +27,7 @@ public class LoggedWindow extends JFrame implements Handle{
     private JFrame jFrame;
 
     public LoggedWindow(String login1, Client client1, String sessionid){
-        super("LoggedWindow");
+        super("BankClientApplication");
         setContentPane(mainPanel);
         pack();
         setVisible(true);
@@ -42,8 +42,8 @@ public class LoggedWindow extends JFrame implements Handle{
         label1.setText("Logged in as: " + login);
 
         defaultTableModel = new DefaultTableModel();
-        defaultTableModel.addColumn("Dane konta");
-        defaultTableModel.addColumn("Wartości");
+        defaultTableModel.addColumn("Account Informations");
+        defaultTableModel.addColumn("Values");
         table1.setModel(defaultTableModel);
 
         logoutButton.addActionListener(new ActionListener() {
@@ -75,8 +75,8 @@ public class LoggedWindow extends JFrame implements Handle{
     public void makeAccountTable(String data){
 
         defaultTableModel = new DefaultTableModel();
-        defaultTableModel.addColumn("Dane konta");
-        defaultTableModel.addColumn("Wartości");
+        defaultTableModel.addColumn("Account Informations");
+        defaultTableModel.addColumn("Values");
         table1.setModel(defaultTableModel);
 
         String[] array = data.split(" ");
@@ -100,7 +100,7 @@ public class LoggedWindow extends JFrame implements Handle{
         if(data.contains("LOGOUT")) {
             try {
                 client.closeSocket();
-                JOptionPane.showConfirmDialog(jFrame, "Wylogowano Poprawnie", "Powiadomienie", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showConfirmDialog(jFrame, "Logged out correctly", "Information", JOptionPane.DEFAULT_OPTION);
                 dispose();
                 LoggingWindow loggingWindow = new LoggingWindow();
 
@@ -109,7 +109,7 @@ public class LoggedWindow extends JFrame implements Handle{
             }
         }
         else if (data.contentEquals("TRANSFER DONE")){
-            JOptionPane.showConfirmDialog(jFrame, "Poprawnie wykonano przelew", "Powiadomienie", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showConfirmDialog(jFrame, "Done transfer correctly", "Information", JOptionPane.DEFAULT_OPTION);
         }
         else if (data.contains("account")){
             makeAccountTable(data);

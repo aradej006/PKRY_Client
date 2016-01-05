@@ -26,7 +26,7 @@ public class LoggingWindow extends JFrame implements Handle {
     private JFrame jFrame;
 
     public LoggingWindow() {
-        super("LoggingWindow");
+        super("BankClientApplication");
         setContentPane(mainPanel);
         pack();
         setVisible(true);
@@ -51,7 +51,7 @@ public class LoggingWindow extends JFrame implements Handle {
 
                 if (login != null && !login.equals(""))
                     if (login.length() <= 2)
-                        textArea1.setText("Login ma minumum 3 znaki \nspróbuj jeszcze raz");
+                        textArea1.setText("Login has a minimum 3 characters \ntry again");
                     else {
                         list1.clearSelection();
                         list1.addSelectionInterval(2, 2);
@@ -59,7 +59,7 @@ public class LoggingWindow extends JFrame implements Handle {
                         textArea1.setText("Sent to server");
                     }
                 else
-                    textArea1.setText("Błąd. Nie podałeś loginu");
+                    textArea1.setText("Error. You did not enter a Login!");
             }
         });
     }
@@ -67,7 +67,7 @@ public class LoggingWindow extends JFrame implements Handle {
     public String handle(String data) {
         if(data.contains("ERROR")){
             textArea1.setText("Message from server: \n");
-            textArea1.append(data);
+            textArea1.append(data.substring(data.indexOf(" ")));
             list1.clearSelection();
             list1.addSelectionInterval(1, 1);
         }
@@ -108,15 +108,16 @@ public class LoggingWindow extends JFrame implements Handle {
         String response = "";
         textArea1.setText(null);
         String password = "";
-
+        String message = "Enter Password letters: ";
         while(response.length() != indexes.split(",").length){
-            int ok = JOptionPane.showConfirmDialog(jFrame, passwordField1, "Enter Password letters: " + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+            int ok = JOptionPane.showConfirmDialog(jFrame, passwordField1, message + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if (ok == JOptionPane.OK_OPTION) {
                 password = new String(passwordField1.getPassword());
             } else {
                 list1.addSelectionInterval(1, 1);
-                textArea1.setText("Błąd - kliknąłeś cancel");
+                textArea1.setText("Error - you clicked cancel");
             }
 
             if (!password.equals("")) {
@@ -125,9 +126,10 @@ public class LoggingWindow extends JFrame implements Handle {
             } else {
                 list1.clearSelection();
                 list1.addSelectionInterval(1, 1);
-                textArea1.setText("Błąd - nie wpisałeś hasła");
+                textArea1.setText("Error - you clicked cancel");
             }
             passwordField1.setText(null);
+            message = "Bad Password. Enter Password letters again: ";
         }
         return response;
     }
@@ -136,15 +138,16 @@ public class LoggingWindow extends JFrame implements Handle {
         String response = "";
         textArea1.setText(null);
         String numbers = "";
+        String message = "Enter PESEL numbers: ";
         while(response.length() != indexes.split(",").length) {
-            int ok = JOptionPane.showConfirmDialog(jFrame, passwordField1, "Enter PESEL Nummbers: " + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            int ok = JOptionPane.showConfirmDialog(jFrame, passwordField1, message + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if (ok == JOptionPane.OK_OPTION) {
                 numbers = new String(passwordField1.getPassword());
             } else {
                 list1.clearSelection();
                 list1.addSelectionInterval(1, 1);
-                textArea1.setText("Błąd - kliknąłeś cancel");
+                textArea1.setText("Error - you clicked cancel");
             }
 
             if (!numbers.equals("")) {
@@ -152,9 +155,10 @@ public class LoggingWindow extends JFrame implements Handle {
             } else {
                 list1.clearSelection();
                 list1.addSelectionInterval(1, 1);
-                textArea1.setText("Błąd - nie wpisałeś liczb");
+                textArea1.setText("Error - you did not enter numbers");
             }
             passwordField1.setText(null);
+            message = "Bad PESEL numbers. Enter PESEL numbers again: ";
         }
         return response;
     }
