@@ -113,6 +113,11 @@ public class LoggingWindow extends JFrame implements Handle {
 
             int ok = JOptionPane.showConfirmDialog(jFrame, passwordField1, message + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
+            if (ok == JOptionPane.OK_CANCEL_OPTION){
+                response = null;
+                break;
+            }
+
             if (ok == JOptionPane.OK_OPTION) {
                 password = new String(passwordField1.getPassword());
             } else {
@@ -141,6 +146,11 @@ public class LoggingWindow extends JFrame implements Handle {
         String message = "Enter PESEL numbers: ";
         while(response.length() != indexes.split(",").length) {
             int ok = JOptionPane.showConfirmDialog(jFrame, passwordField1, message + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+            if (ok == JOptionPane.OK_CANCEL_OPTION){
+                response = null;
+                break;
+            }
 
             if (ok == JOptionPane.OK_OPTION) {
                 numbers = new String(passwordField1.getPassword());

@@ -24,7 +24,7 @@ public class TransferWindow extends JFrame{
         setContentPane(mainPanel);
         pack();
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         this.client = client1;
         this.login = login1;
