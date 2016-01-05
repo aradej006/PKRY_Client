@@ -119,6 +119,8 @@ public class LoggedWindow extends JFrame implements Handle{
             makeAccountTable(data);
         }else if (data.contains("history")) {
             makeHistoryTable(data);
+        }else if (data.contains("ERROR")){
+            JOptionPane.showConfirmDialog(jFrame, data, "Information", JOptionPane.DEFAULT_OPTION);
         }
         return null;
     }
