@@ -44,7 +44,10 @@ public class LoggedWindow extends JFrame implements Handle{
         defaultTableModel = new DefaultTableModel();
         defaultTableModel.addColumn("Account Informations");
         defaultTableModel.addColumn("Values");
+
         table1.setModel(defaultTableModel);
+        table1.setAutoCreateRowSorter(true);
+
         refreshAccountInfoButton.doClick();
 
         logoutButton.addActionListener(new ActionListener() {
