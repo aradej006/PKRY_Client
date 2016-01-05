@@ -39,7 +39,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Podaj numer konta na które przelać"/>
+          <text value="Enter number of account destination"/>
         </properties>
       </component>
       <component id="cfa59" class="javax.swing.JLabel">
@@ -47,7 +47,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Podaj kwotę którą przelać"/>
+          <text value="Enter amount of money to send"/>
         </properties>
       </component>
       <component id="de96c" class="javax.swing.JButton" binding="doTransferButton">
@@ -55,7 +55,7 @@
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Wykonaj przelew"/>
+          <text value="Do transfer"/>
         </properties>
       </component>
     </children>

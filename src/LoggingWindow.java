@@ -83,6 +83,10 @@ public class LoggingWindow extends JFrame implements Handle {
                     client.sendData("Password" + " " + login + " " + password + " " + passwordIndexes);
                     list1.clearSelection();
                     list1.addSelectionInterval(4, 4);
+                }else {
+                    list1.clearSelection();
+                    list1.addSelectionInterval(1, 1);
+                    textArea1.setText("You canceled log in operation");
                 }
             } else if (data.contains("PESELIndexes")) {
                 peselIndexes = data.split(" ")[1];
@@ -96,6 +100,10 @@ public class LoggingWindow extends JFrame implements Handle {
                     list1.clearSelection();
                     list1.addSelectionInterval(6, 6);
                     textArea1.setText("Sent to server");
+                }else {
+                    list1.clearSelection();
+                    list1.addSelectionInterval(1, 1);
+                    textArea1.setText("You canceled log in operation");
                 }
             } else if (data.contains("LoggedIn")) {
                 dispose();
@@ -134,7 +142,7 @@ public class LoggingWindow extends JFrame implements Handle {
                 textArea1.setText("Error - you clicked cancel");
             }
             passwordField1.setText(null);
-            message = "Bad Password. Enter Password letters again: ";
+            message = "Bad Password. Enter Password letters again:\n";
         }
         return response;
     }
@@ -168,7 +176,7 @@ public class LoggingWindow extends JFrame implements Handle {
                 textArea1.setText("Error - you did not enter numbers");
             }
             passwordField1.setText(null);
-            message = "Bad PESEL numbers. Enter PESEL numbers again: ";
+            message = "Bad PESEL numbers. Enter PESEL numbers again:\n";
         }
         return response;
     }
