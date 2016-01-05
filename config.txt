@@ -1,1 +1,1 @@
-Config-develop zmieniony
+Config-develop działający

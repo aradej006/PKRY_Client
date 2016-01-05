@@ -15,7 +15,6 @@ public class LoggingWindow extends JFrame implements Handle {
     private JLabel loggedLabel;
     private JTextArea textArea1;
     private JPasswordField passwordField1 = new JPasswordField();
-
     private String login = null;
     private String password = null;
     private String passwordIndexes = null;
@@ -40,7 +39,7 @@ public class LoggingWindow extends JFrame implements Handle {
         textArea1.setForeground(Color.blue);
 
         try {
-            client = new Client("localhost", 8000, this);
+            client = new Client("192.168.1.6", 8000, this);
         } catch (Exception err) {
             err.printStackTrace();
         }

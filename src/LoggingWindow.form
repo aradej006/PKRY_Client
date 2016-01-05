@@ -19,11 +19,11 @@
           <model>
             <item value="Kroki:"/>
             <item value="1. Podaj login"/>
-            <item value="2. Oczekiwanie na odpowiedz"/>
+            <item value="2. Oczekiwanie na odpowiedź"/>
             <item value="3. Podaj litery z hasła"/>
-            <item value="4. Oczekiwanie na odpowiedz"/>
-            <item value="5. Podać cyfry z peselu"/>
-            <item value="6. Oczekiwanie na odpowiedz"/>
+            <item value="4. Oczekiwanie na odpowiedź"/>
+            <item value="5. Podaj cyfry z peselu"/>
+            <item value="6. Oczekiwanie na odpowiedź"/>
           </model>
           <visibleRowCount value="4"/>
         </properties>
