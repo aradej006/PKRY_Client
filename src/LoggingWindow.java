@@ -19,6 +19,7 @@ public class LoggingWindow extends JFrame implements Handle {
     private String login = null;
     private String password = null;
     private String passwordIndexes = null;
+    private String peselIndexes = null;
 
     private Client client;
 
@@ -27,14 +28,14 @@ public class LoggingWindow extends JFrame implements Handle {
         setContentPane(mainPanel);
         pack();
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         list1.addSelectionInterval(1, 1);
         loggedLabel.setForeground(Color.red);
         textArea1.setForeground(Color.blue);
 
         try {
-            client = new Client("192.168.1.6", 8000, this);
+            client = new Client("192.168.1.5", 7000, this);
         } catch (Exception err) {
             err.printStackTrace();
         }
@@ -70,7 +71,7 @@ public class LoggingWindow extends JFrame implements Handle {
         }
         else
             if (data.contains("PasswordIndexes")) {
-                String passwordIndexes = data.split(" ")[1];
+                passwordIndexes = data.split(" ")[1];
                 list1.clearSelection();
                 list1.addSelectionInterval(3, 3);
 
@@ -82,7 +83,7 @@ public class LoggingWindow extends JFrame implements Handle {
                     list1.addSelectionInterval(4, 4);
                 }
             } else if (data.contains("PESELIndexes")) {
-                String peselIndexes = data.split(" ")[1];
+                peselIndexes = data.split(" ")[1];
                 list1.clearSelection();
                 list1.addSelectionInterval(5, 5);
 
