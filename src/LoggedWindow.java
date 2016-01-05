@@ -91,7 +91,7 @@ public class LoggedWindow extends JFrame implements Handle{
                 e.printStackTrace();
             }
         }
-        else if (data.contentEquals("transferok")){
+        else if (data.contentEquals("TRANSFER DONE")){
             JOptionPane.showConfirmDialog(jFrame, "Poprawnie wykonano przelew", "Powiadomienie", JOptionPane.DEFAULT_OPTION);
         }
         else if (data.contains("account")){
