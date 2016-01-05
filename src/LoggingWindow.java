@@ -105,56 +105,57 @@ public class LoggingWindow extends JFrame implements Handle {
     }
 
     public String getPassword(String indexes, JFrame jFrame) {
-        String response = null;
+        String response = "";
         textArea1.setText(null);
         String password = "";
 
-        int ok = JOptionPane.showConfirmDialog(jFrame, passwordField1, "Enter Password letters: " + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        while(response.length() != indexes.split(",").length){
+            int ok = JOptionPane.showConfirmDialog(jFrame, passwordField1, "Enter Password letters: " + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
-        if (ok == JOptionPane.OK_OPTION) {
-            password = new String(passwordField1.getPassword());
-        } else {
-            list1.addSelectionInterval(1, 1);
-            textArea1.setText("Błąd - kliknąłeś cancel");
+            if (ok == JOptionPane.OK_OPTION) {
+                password = new String(passwordField1.getPassword());
+            } else {
+                list1.addSelectionInterval(1, 1);
+                textArea1.setText("Błąd - kliknąłeś cancel");
+            }
+
+            if (!password.equals("")) {
+                response = password;
+                textArea1.setText("Sent to server");
+            } else {
+                list1.clearSelection();
+                list1.addSelectionInterval(1, 1);
+                textArea1.setText("Błąd - nie wpisałeś hasła");
+            }
+            passwordField1.setText(null);
         }
-
-        if (!password.equals("")) {
-            response = password;
-            textArea1.setText("Sent to server");
-        } else {
-            list1.clearSelection();
-            list1.addSelectionInterval(1, 1);
-            textArea1.setText("Błąd - nie wpisałeś hasła");
-        }
-        passwordField1.setText(null);
-
         return response;
     }
 
     public String getPeselNumbers(String indexes, JFrame jFrame) {
-        String response = null;
+        String response = "";
         textArea1.setText(null);
         String numbers = "";
+        while(response.length() != indexes.split(",").length) {
+            int ok = JOptionPane.showConfirmDialog(jFrame, passwordField1, "Enter PESEL Nummbers: " + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
-        int ok = JOptionPane.showConfirmDialog(jFrame, passwordField1, "Enter PESEL Nummbers: " + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (ok == JOptionPane.OK_OPTION) {
+                numbers = new String(passwordField1.getPassword());
+            } else {
+                list1.clearSelection();
+                list1.addSelectionInterval(1, 1);
+                textArea1.setText("Błąd - kliknąłeś cancel");
+            }
 
-        if (ok == JOptionPane.OK_OPTION) {
-            numbers = new String(passwordField1.getPassword());
-        } else {
-            list1.clearSelection();
-            list1.addSelectionInterval(1, 1);
-            textArea1.setText("Błąd - kliknąłeś cancel");
+            if (!numbers.equals("")) {
+                response = numbers;
+            } else {
+                list1.clearSelection();
+                list1.addSelectionInterval(1, 1);
+                textArea1.setText("Błąd - nie wpisałeś liczb");
+            }
+            passwordField1.setText(null);
         }
-
-        if (!numbers.equals("")) {
-            response = numbers;
-        } else {
-            list1.clearSelection();
-            list1.addSelectionInterval(1, 1);
-            textArea1.setText("Błąd - nie wpisałeś liczb");
-        }
-        passwordField1.setText(null);
-
         return response;
     }
 }

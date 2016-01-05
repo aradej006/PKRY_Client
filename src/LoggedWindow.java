@@ -72,7 +72,7 @@ public class LoggedWindow extends JFrame implements Handle{
         });
     }
 
-    public void makeAccountTable(DefaultTableModel defaultTableModel, String data){
+    public void makeAccountTable(String data){
 
         defaultTableModel = new DefaultTableModel();
         defaultTableModel.addColumn("Dane konta");
@@ -84,7 +84,7 @@ public class LoggedWindow extends JFrame implements Handle{
         for(int i=1;i<array.length;i++)
             defaultTableModel.addRow(new Object[]{infoArray[i-1],array[i]});
     }
-    public void makeHistoryTable(DefaultTableModel defaultTableModel,String data){
+    public void makeHistoryTable(String data){
         defaultTableModel = new DefaultTableModel();
         String[] infoArray = {"Amount","Currency","FromAccount","ToAccount","TransferDate"};
         for (int i = 0;i<infoArray.length;i++)
@@ -112,9 +112,9 @@ public class LoggedWindow extends JFrame implements Handle{
             JOptionPane.showConfirmDialog(jFrame, "Poprawnie wykonano przelew", "Powiadomienie", JOptionPane.DEFAULT_OPTION);
         }
         else if (data.contains("account")){
-            makeAccountTable(defaultTableModel,data);
+            makeAccountTable(data);
         }else if (data.contains("history")) {
-            makeHistoryTable(defaultTableModel,data);
+            makeHistoryTable(data);
         }
         return null;
     }
