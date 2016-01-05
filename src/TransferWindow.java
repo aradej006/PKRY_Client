@@ -40,7 +40,7 @@ public class TransferWindow extends JFrame{
                 if(textField1.getText() != null)
                     if(textField2.getText() != null){
                         client.sendData("DoTransfer" + " " + login + " " + sessionID + " " + textField2.getText() + " " + textField1.getText());
-                        JOptionPane.showConfirmDialog(jFrame, "Sent correctly", "Information", JOptionPane.DEFAULT_OPTION);
+                        JOptionPane.showMessageDialog(jFrame, "Sent correctly", "Information", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
                     }
             }

@@ -48,7 +48,7 @@ public class LoggedWindow extends JFrame implements Handle{
         table1.setModel(defaultTableModel);
         table1.setAutoCreateRowSorter(true);
 
-        refreshAccountInfoButton.doClick();
+        table1.setAutoCreateRowSorter(true);
 
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -74,6 +74,8 @@ public class LoggedWindow extends JFrame implements Handle{
                 client.sendData("gethistory" + " " + login + " " + sessionID);
             }
         });
+
+        refreshAccountInfoButton.doClick();
     }
 
     public void makeAccountTable(String data){
@@ -104,7 +106,7 @@ public class LoggedWindow extends JFrame implements Handle{
         if(data.contains("LOGOUT")) {
             try {
                 client.closeSocket();
-                JOptionPane.showConfirmDialog(jFrame, "Logged out correctly", "Information", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showMessageDialog(jFrame, "Logged out correctly", "Information", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
                 LoggingWindow loggingWindow = new LoggingWindow();
 
@@ -113,14 +115,14 @@ public class LoggedWindow extends JFrame implements Handle{
             }
         }
         else if (data.contentEquals("TRANSFER DONE")){
-            JOptionPane.showConfirmDialog(jFrame, "Done transfer correctly", "Information", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showMessageDialog(jFrame, "Done transfer correctly", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
         else if (data.contains("account")){
             makeAccountTable(data);
         }else if (data.contains("history")) {
             makeHistoryTable(data);
         }else if (data.contains("ERROR")){
-            JOptionPane.showConfirmDialog(jFrame, data, "Information", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showMessageDialog(jFrame, data, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
