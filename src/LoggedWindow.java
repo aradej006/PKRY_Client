@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by ene on 04.01.16.
@@ -92,8 +93,8 @@ public class LoggedWindow extends JFrame implements Handle{
 
         String[] array = data.split(" ");
 
-        for(int i=0;i<array.length;i+=4)
-            defaultTableModel.addRow(new Object[]{infoArray[i],array[i+1],array[i+2],array[i+3]});
+        for(int i=1;i<array.length;i+=5)
+            defaultTableModel.addRow(new Object[]{array[i],array[i+1],array[i+2],array[i+3],new Date(Long.parseLong(array[i+4])) });
     }
     public String handle(String data) {
         if(data.contains("LOGOUT")) {
