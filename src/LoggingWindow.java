@@ -23,6 +23,8 @@ public class LoggingWindow extends JFrame implements Handle {
 
     private Client client;
 
+    private JFrame jFrame;
+
     public LoggingWindow() {
         super("LoggingWindow");
         setContentPane(mainPanel);
@@ -33,6 +35,7 @@ public class LoggingWindow extends JFrame implements Handle {
         list1.addSelectionInterval(1, 1);
         loggedLabel.setForeground(Color.red);
         textArea1.setForeground(Color.blue);
+        jFrame = this;
 
         try {
             client = new Client("192.168.1.5", 7000, this);
@@ -44,9 +47,9 @@ public class LoggingWindow extends JFrame implements Handle {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textArea1.setText(null);
-                login = JOptionPane.showInputDialog(null, "Enter Login: ");
+                login = JOptionPane.showInputDialog(jFrame, "Enter Login: ");
 
-                if (!login.equals(""))
+                if (login != null && !login.equals(""))
                     if (login.length() <= 2)
                         textArea1.setText("Login ma minumum 3 znaki \nspróbuj jeszcze raz");
                     else {
@@ -74,7 +77,7 @@ public class LoggingWindow extends JFrame implements Handle {
                 list1.clearSelection();
                 list1.addSelectionInterval(3, 3);
 
-                password = getPassword(passwordIndexes);
+                password = getPassword(passwordIndexes,jFrame);
 
                 if(password != null) {
                     client.sendData("Password" + " " + login + " " + password + " " + passwordIndexes);
@@ -86,7 +89,7 @@ public class LoggingWindow extends JFrame implements Handle {
                 list1.clearSelection();
                 list1.addSelectionInterval(5, 5);
 
-                String peselNumbers = getPeselNumbers(peselIndexes);
+                String peselNumbers = getPeselNumbers(peselIndexes,jFrame);
 
                 if(peselNumbers != null){
                     client.sendData("PESELNumbers" + " " + login + " " + password + " " + passwordIndexes + " " + peselNumbers + " " + peselIndexes);
@@ -101,12 +104,12 @@ public class LoggingWindow extends JFrame implements Handle {
         return null;
     }
 
-    public String getPassword(String indexes) {
+    public String getPassword(String indexes, JFrame jFrame) {
         String response = null;
         textArea1.setText(null);
         String password = "";
 
-        int ok = JOptionPane.showConfirmDialog(null, passwordField1, "Enter Password letters: " + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int ok = JOptionPane.showConfirmDialog(jFrame, passwordField1, "Enter Password letters: " + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (ok == JOptionPane.OK_OPTION) {
             password = new String(passwordField1.getPassword());
@@ -128,12 +131,12 @@ public class LoggingWindow extends JFrame implements Handle {
         return response;
     }
 
-    public String getPeselNumbers(String indexes) {
+    public String getPeselNumbers(String indexes, JFrame jFrame) {
         String response = null;
         textArea1.setText(null);
         String numbers = "";
 
-        int ok = JOptionPane.showConfirmDialog(null, passwordField1, "Enter PESEL Nummbers: " + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int ok = JOptionPane.showConfirmDialog(jFrame, passwordField1, "Enter PESEL Nummbers: " + indexes, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (ok == JOptionPane.OK_OPTION) {
             numbers = new String(passwordField1.getPassword());

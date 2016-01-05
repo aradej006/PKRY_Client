@@ -22,6 +22,8 @@ public class LoggedWindow extends JFrame implements Handle{
     private String sessionID;
     private Client client;
 
+    private JFrame jFrame;
+
     public LoggedWindow(String login1, Client client1, String sessionid){
         super("LoggedWindow");
         setContentPane(mainPanel);
@@ -29,6 +31,7 @@ public class LoggedWindow extends JFrame implements Handle{
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        jFrame = this;
         this.login = login1;
         this.client = client1;
         this.sessionID = sessionid;
@@ -80,7 +83,7 @@ public class LoggedWindow extends JFrame implements Handle{
         if(data.contains("LOGOUT")) {
             try {
                 client.closeSocket();
-                JOptionPane.showConfirmDialog(null, "Wylogowano Poprawnie", "Powiadomienie", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showConfirmDialog(jFrame, "Wylogowano Poprawnie", "Powiadomienie", JOptionPane.DEFAULT_OPTION);
                 dispose();
                 LoggingWindow loggingWindow = new LoggingWindow();
 
@@ -89,7 +92,7 @@ public class LoggedWindow extends JFrame implements Handle{
             }
         }
         else if (data.contentEquals("transferok")){
-            JOptionPane.showConfirmDialog(null, "Poprawnie wykonano przelew", "Powiadomienie", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showConfirmDialog(jFrame, "Poprawnie wykonano przelew", "Powiadomienie", JOptionPane.DEFAULT_OPTION);
         }
         else if (data.contains("account")){
             makeTable(defaultTableModel,data);

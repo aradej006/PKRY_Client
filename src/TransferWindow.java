@@ -17,6 +17,8 @@ public class TransferWindow extends JFrame{
     private String login;
     private String sessionID;
 
+    private JFrame jFrame;
+
     public TransferWindow(Client client1, String login1, String sessionID1){
         super("Okno przelewów");
         setContentPane(mainPanel);
@@ -27,6 +29,7 @@ public class TransferWindow extends JFrame{
         this.client = client1;
         this.login = login1;
         this.sessionID = sessionID1;
+        jFrame = this;
 
         doTransferButton.addActionListener(new ActionListener() {
             @Override
@@ -34,7 +37,7 @@ public class TransferWindow extends JFrame{
                 if(textField1.getText() != null)
                     if(textField2.getText() != null){
                         client.sendData("DoTransfer" + " " + login + " " + sessionID + " " + textField2.getText() + " " + textField1.getText());
-                        JOptionPane.showConfirmDialog(null, "Poprawnie wysłano", "Powiadomienie", JOptionPane.DEFAULT_OPTION);
+                        JOptionPane.showConfirmDialog(jFrame, "Poprawnie wysłano", "Powiadomienie", JOptionPane.DEFAULT_OPTION);
                         dispose();
                     }
             }
