@@ -16,6 +16,7 @@ public class LoggedWindow extends JFrame implements Handle{
     private JScrollPane scrollPane1;
     private JButton refreshAccountInfoButton;
     private JButton doTransferButton;
+    private JButton getHistoryButton;
     private DefaultTableModel defaultTableModel;
 
     private String login;
@@ -62,9 +63,15 @@ public class LoggedWindow extends JFrame implements Handle{
                 TransferWindow transferWindow = new TransferWindow(client,login,sessionID,jFrame);
             }
         });
+        getHistoryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                client.sendData("gethistory" + " " + login + " " + sessionID);
+            }
+        });
     }
 
-    public void makeTable(DefaultTableModel defaultTableModel, String data){
+    public void makeAccountTable(DefaultTableModel defaultTableModel, String data){
 
         defaultTableModel = new DefaultTableModel();
         defaultTableModel.addColumn("Dane konta");
@@ -73,12 +80,21 @@ public class LoggedWindow extends JFrame implements Handle{
 
         String[] array = data.split(" ");
         String[] infoArray = {"Balance","Currency","Number","FirstName","LastName"};
-
-        for(int i=1;i<array.length;i++){
+        for(int i=1;i<array.length;i++)
             defaultTableModel.addRow(new Object[]{infoArray[i-1],array[i]});
-        }
     }
+    public void makeHistoryTable(DefaultTableModel defaultTableModel,String data){
+        defaultTableModel = new DefaultTableModel();
+        String[] infoArray = {"Amount","Currency","FromAccount","ToAccount","TransferDate"};
+        for (int i = 0;i<infoArray.length;i++)
+            defaultTableModel.addColumn(infoArray[i]);
+        table1.setModel(defaultTableModel);
 
+        String[] array = data.split(" ");
+
+        for(int i=0;i<array.length;i+=4)
+            defaultTableModel.addRow(new Object[]{infoArray[i],array[i+1],array[i+2],array[i+3]});
+    }
     public String handle(String data) {
         if(data.contains("LOGOUT")) {
             try {
@@ -95,7 +111,9 @@ public class LoggedWindow extends JFrame implements Handle{
             JOptionPane.showConfirmDialog(jFrame, "Poprawnie wykonano przelew", "Powiadomienie", JOptionPane.DEFAULT_OPTION);
         }
         else if (data.contains("account")){
-            makeTable(defaultTableModel,data);
+            makeAccountTable(defaultTableModel,data);
+        }else if (data.contains("history")) {
+            makeHistoryTable(defaultTableModel,data);
         }
         return null;
     }
