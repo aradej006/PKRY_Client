@@ -20,6 +20,7 @@ public class TransferWindow extends JFrame{
     public TransferWindow(Client client1, String login1, String sessionID1){
         super("Okno przelewów");
         setContentPane(mainPanel);
+        pack();
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -32,7 +33,7 @@ public class TransferWindow extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if(textField1.getText() != null)
                     if(textField2.getText() != null){
-                        client.sendData(login + " " + sessionID + " " + textField2.getText() + " " + textField1.getText());
+                        client.sendData("DoTransfer" + " " + login + " " + sessionID + " " + textField2.getText() + " " + textField1.getText());
                         JOptionPane.showConfirmDialog(null, "Poprawnie wysłano", "Powiadomienie", JOptionPane.DEFAULT_OPTION);
                         dispose();
                     }
