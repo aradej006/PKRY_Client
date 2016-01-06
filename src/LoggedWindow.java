@@ -9,6 +9,12 @@ import java.util.Date;
 /**
  * Created by ene on 04.01.16.
  */
+/**
+  * Window where user is logged in correctly and now can do transfers and gets history of his transfers
+ * @author Piotr Januszewski
+ * @author Adrian Radej
+ * @author Monika Stępkowska
+ */
 public class LoggedWindow extends JFrame implements Handle{
     private JTable table1;
     private JPanel mainPanel;
@@ -26,7 +32,18 @@ public class LoggedWindow extends JFrame implements Handle{
 
     private JFrame jFrame;
 
-    public LoggedWindow(String login1, Client client1, String sessionid){
+    /**
+     * Suppresses default constructor
+     */
+    private LoggedWindow(){}
+
+    /**
+     * Class constructor. Makes window
+     * @param login1 User login
+     * @param client1 Client which can communicate with server
+     * @param sessionId User session ID
+     */
+    public LoggedWindow(String login1, Client client1, String sessionId){
         super("BankClientApplication");
         setContentPane(mainPanel);
         pack();
@@ -36,7 +53,7 @@ public class LoggedWindow extends JFrame implements Handle{
         jFrame = this;
         this.login = login1;
         this.client = client1;
-        this.sessionID = sessionid;
+        this.sessionID = sessionId;
         this.client.changeHandle(this);
         label1.setForeground(Color.red);
         label1.setText("Logged in as: " + login);
@@ -78,6 +95,10 @@ public class LoggedWindow extends JFrame implements Handle{
         refreshAccountInfoButton.doClick();
     }
 
+    /**
+     * Function which makes table with account information
+     * @param data Data from server
+     */
     public void makeAccountTable(String data){
 
         defaultTableModel = new DefaultTableModel();
@@ -90,6 +111,11 @@ public class LoggedWindow extends JFrame implements Handle{
         for(int i=1;i<array.length;i++)
             defaultTableModel.addRow(new Object[]{infoArray[i-1],array[i]});
     }
+
+    /**
+     * Function which makes table with transfers history
+     * @param data Data from server
+     */
     public void makeHistoryTable(String data){
         defaultTableModel = new DefaultTableModel();
         String[] infoArray = {"Amount","Currency","FromAccount","ToAccount","TransferDate"};
@@ -102,6 +128,12 @@ public class LoggedWindow extends JFrame implements Handle{
         for(int i=1;i<array.length;i+=5)
             defaultTableModel.addRow(new Object[]{array[i],array[i+1],array[i+2],array[i+3],new Date(Long.parseLong(array[i+4])) });
     }
+
+    /**
+     * Handle function, which handle server messages
+     * @param data Data from server
+     * @return null
+     */
     public String handle(String data) {
         if(data.contains("LOGOUT")) {
             try {

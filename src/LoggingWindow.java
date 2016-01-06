@@ -10,7 +10,15 @@ import java.io.IOException;
 /**
  * Created by ene on 03.01.16.
  */
+
+/**
+ * BankClientApplication Window
+ * @author Piotr Januszewski
+ * @author Adrian Radej
+ * @author Monika Stępkowska
+ */
 public class LoggingWindow extends JFrame implements Handle {
+
     private JButton loginButton;
     private JPanel mainPanel;
     private JList list1;
@@ -27,6 +35,9 @@ public class LoggingWindow extends JFrame implements Handle {
 
     private JFrame jFrame;
 
+    /**
+     * Class constructor. Makes safe ssl connection with server and BankClientApplication Window
+     */
     public LoggingWindow() {
         super("BankClientApplication");
         setContentPane(mainPanel);
@@ -78,6 +89,11 @@ public class LoggingWindow extends JFrame implements Handle {
         });
     }
 
+    /**
+     * Handle function, which handle server messages
+     * @param data Data from server
+     * @return null
+     */
     public String handle(String data) {
         if(data.contains("ERROR")){
             textArea1.setText("Message from server: \n");
@@ -126,6 +142,12 @@ public class LoggingWindow extends JFrame implements Handle {
         return null;
     }
 
+    /**
+     * Function which is used to get letters from user password. It displays little window to enter it.
+     * @param indexes Indexes of password letters to enter
+     * @param jFrame JFrame which helps program to focus popping up window
+     * @return Returns password letters or "" if user canceled operation
+     */
     public String getPassword(String indexes, JFrame jFrame) {
         String response = "";
         textArea1.setText(null);
@@ -161,6 +183,12 @@ public class LoggingWindow extends JFrame implements Handle {
         return response;
     }
 
+    /**
+     * Function which is used to get numbers from user PESEL. It displays little window to enter it.
+     * @param indexes Indexes of PESEL numbers to enter
+     * @param jFrame JFrame which helps program to focus popping up window
+     * @return Returns PESEL numbers or "" if user canceled operation
+     */
     public String getPeselNumbers(String indexes, JFrame jFrame) {
         String response = "";
         textArea1.setText(null);

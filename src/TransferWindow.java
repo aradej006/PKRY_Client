@@ -6,6 +6,13 @@ import java.io.IOException;
 /**
  * Created by ene on 05.01.16.
  */
+
+/**
+ * Window where user can make transfers
+ * @author Piotr Januszewski
+ * @author Adrian Radej
+ * @author Monika Stępkowska
+ */
 public class TransferWindow extends JFrame{
 
     private JTextField textField1;
@@ -13,12 +20,22 @@ public class TransferWindow extends JFrame{
     private JButton doTransferButton;
     private JPanel mainPanel;
     private Client client;
-
     private String login;
     private String sessionID;
-
     private JFrame jFrame;
 
+    /**
+     * Suppresses default constructor
+     */
+    private TransferWindow(){}
+
+    /**
+     * Class constructor. Makes window
+     * @param client1 Client which can communicate with server
+     * @param login1 User login
+     * @param sessionID1 User session ID
+     * @param jFrame1 JFrame which helps program to focus popping up window
+     */
     public TransferWindow(Client client1, String login1, String sessionID1, JFrame jFrame1){
         super("Transfer Window");
         setContentPane(mainPanel);
@@ -45,6 +62,5 @@ public class TransferWindow extends JFrame{
                     }
             }
         });
-
     }
 }

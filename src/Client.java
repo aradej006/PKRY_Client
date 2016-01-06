@@ -10,6 +10,13 @@ import java.util.StringTokenizer;
 /**
  * Created by arade on 04-Jan-16.
  */
+
+/**
+ * Class which makes SSL Client and connects to the server
+ * @author Piotr Januszewski
+ * @author Adrian Radej
+ * @author Monika Stępkowska
+ */
 public class Client implements Runnable {
 
     private SSLSocket socket;
@@ -20,10 +27,19 @@ public class Client implements Runnable {
     @SuppressWarnings("unused")
     private int id;
 
-    public Client(String host, int port, Handle handle)
-            throws Exception {
+    /**
+     * Suppresses default constructor
+     */
+    private Client(){}
 
-
+    /**
+     * Class constructor
+     * @param host Server IP address
+     * @param port Server port number
+     * @param handle Class which implements Handle interface
+     * @throws Exception
+     */
+    public Client(String host, int port, Handle handle) throws Exception {
         System.setProperty("javax.net.ssl.trustStore", "mySrvKeystore");
         System.setProperty("javax.net.ssl.trustStorePassword", "123456");
 
@@ -46,10 +62,17 @@ public class Client implements Runnable {
         send(TProtocol.LOGIN);
     }
 
+    /**
+     * Tells if Socket between server and client is disconnected
+     * @return Bool
+     */
     public synchronized boolean isDisconnected() {
         return socket == null;
     }
 
+    /**
+     * Function in which client is running
+     */
     public void run() {
         while (true)
             try {
@@ -69,6 +92,11 @@ public class Client implements Runnable {
         }
     }
 
+    /**
+     * Function which handle data with commands from server
+     * @param command Data with commands from server
+     * @return Bool
+     */
     private synchronized boolean handleCommand(String command) {
         StringTokenizer st = new StringTokenizer(command);
         String cd = st.nextToken();
@@ -88,20 +116,35 @@ public class Client implements Runnable {
         return true;
     }
 
+    /**
+     * Function used to send data with command to server
+     * @param command Data with command which is send to server
+     */
     void send(String command) {
         if (output != null)
             output.println(command);
     }
 
+    /**
+     * Function used to send data to server
+     * @param data Data which is send to server
+     */
     public void sendData(String data){
         send(TProtocol.DATA + " " + data);
     }
 
+    /**
+     * Function used to do force logout from server
+     */
     public synchronized void forceLogout() {
         if (socket != null)
             send(TProtocol.LOGOUT);
     }
 
+    /**
+     * Function which closes Socket
+     * @throws IOException
+     */
     public void closeSocket() throws IOException {
         try {
             send(TProtocol.LOGOUT);
@@ -111,6 +154,10 @@ public class Client implements Runnable {
         }
     }
 
+    /**
+     * Function which helps to change class which implements Handle interface
+     * @param handle Class which implements Handle interface
+     */
     public void changeHandle(Handle handle){
         this.handle = handle;
     }

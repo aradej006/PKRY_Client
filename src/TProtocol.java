@@ -1,3 +1,9 @@
+/**
+ * Class which helps to manage connection between client and server
+ * @author Piotr Januszewski
+ * @author Adrian Radej
+ * @author Monika Stępkowska
+ */
 public class TProtocol {
 	static final String LOGIN = "login";
     static final String LOGGEDIN = "loggedin";
