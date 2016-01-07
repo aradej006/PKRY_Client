@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -19,6 +20,8 @@ public class TransferWindow extends JFrame{
     private JTextField textField2;
     private JButton doTransferButton;
     private JPanel mainPanel;
+    private JButton cancelButton;
+    private JTextArea textArea1;
     private Client client;
     private String login;
     private String sessionID;
@@ -46,6 +49,8 @@ public class TransferWindow extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        textArea1.setForeground(Color.red);
+
         this.client = client1;
         this.login = login1;
         this.sessionID = sessionID1;
@@ -54,12 +59,40 @@ public class TransferWindow extends JFrame{
         doTransferButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(textField1.getText() != null)
-                    if(textField2.getText() != null){
-                        client.sendData("DoTransfer" + " " + login + " " + sessionID + " " + textField2.getText() + " " + textField1.getText());
-                        JOptionPane.showMessageDialog(jFrame, "Sent correctly", "Information", JOptionPane.INFORMATION_MESSAGE);
-                        dispose();
-                    }
+                textField2.selectAll();
+                textField1.selectAll();
+                boolean isDouble = false;
+                boolean isNumber = false;
+
+                try{
+                    Double.parseDouble(textField1.getSelectedText());
+                    isDouble = true;
+                    Integer.parseInt(textField2.getSelectedText());
+                    isNumber = true;
+                }catch (Exception er){
+                    textArea1.setText("Money not entered correctly \nTry again");
+                }
+
+                if(isDouble)
+                    if(textField1.getSelectedText().length() == 26)
+                        if(isNumber){
+                            client.sendData("DoTransfer" + " " + login + " " + sessionID + " " + textField2.getText() + " " + textField1.getText());
+                            JOptionPane.showMessageDialog(jFrame, "Sent correctly", "Information", JOptionPane.INFORMATION_MESSAGE);
+                            dispose();
+                        }
+                        else
+                            textArea1.setText("Error. You not entered number.\nTry again");
+                    else
+                        textArea1.setText("Error. Account number has 26 digits.\nTry again");
+                else
+                    textArea1.setText("Error. You not entered number.\nTry again");
+            }
+        });
+
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
             }
         });
     }

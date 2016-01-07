@@ -1,7 +1,6 @@
 /**
  * Created by ene on 03.01.16.
  */
-
 /**
  * Class which starts BankClientApplication
  * @author Piotr Januszewski
@@ -14,6 +13,7 @@ public class MainClass {
      * @param args None
      */
     public static void main(String[] args){
+
         LoggingWindow loggingWindow = new LoggingWindow();
     }
 }

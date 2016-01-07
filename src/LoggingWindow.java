@@ -1,12 +1,10 @@
 import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-
 /**
  * Created by ene on 03.01.16.
  */
@@ -24,6 +22,7 @@ public class LoggingWindow extends JFrame implements Handle {
     private JList list1;
     private JLabel loggedLabel;
     private JTextArea textArea1;
+    private JButton exitButton;
     private JPasswordField passwordField1 = new JPasswordField();
 
     private String login = null;
@@ -40,18 +39,33 @@ public class LoggingWindow extends JFrame implements Handle {
      */
     public LoggingWindow() {
         super("BankClientApplication");
+
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+
+        loggedLabel.setForeground(Color.red);
         setContentPane(mainPanel);
+        SwingUtilities.updateComponentTreeUI (mainPanel);
+
         pack();
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         list1.addSelectionInterval(1, 1);
-        loggedLabel.setForeground(Color.red);
         textArea1.setForeground(Color.blue);
         jFrame = this;
 
         try {
-            client = new Client("192.168.1.5", 7000, this);
+            client = new Client("127.0.1.1", 7000, this);
         } catch (Exception err) {
             err.printStackTrace();
         }
@@ -72,6 +86,11 @@ public class LoggingWindow extends JFrame implements Handle {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textArea1.setText(null);
+
+                Font font = new Font("Purisa", Font.BOLD, 12);
+                UIManager.put("OptionPane.messageFont", font);
+                UIManager.put("OptionPane.buttonFont", font);
+
                 login = JOptionPane.showInputDialog(jFrame, "Enter Login: ");
 
                 if (login != null && !login.equals(""))
@@ -85,6 +104,17 @@ public class LoggingWindow extends JFrame implements Handle {
                     }
                 else
                     textArea1.setText("Error. You did not enter a Login!");
+            }
+        });
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    client.closeSocket();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                System.exit(0);
             }
         });
     }

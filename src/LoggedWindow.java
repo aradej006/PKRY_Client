@@ -51,10 +51,12 @@ public class LoggedWindow extends JFrame implements Handle{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         jFrame = this;
+
         this.login = login1;
         this.client = client1;
         this.sessionID = sessionId;
         this.client.changeHandle(this);
+
         label1.setForeground(Color.red);
         label1.setText("Logged in as: " + login);
 
@@ -62,10 +64,13 @@ public class LoggedWindow extends JFrame implements Handle{
         defaultTableModel.addColumn("Account Informations");
         defaultTableModel.addColumn("Values");
 
+        Font font = new Font("Purisa", Font.BOLD, 12);
+
         table1.setModel(defaultTableModel);
         table1.setAutoCreateRowSorter(true);
-
         table1.setAutoCreateRowSorter(true);
+        table1.setFont(font);
+        table1.getFontMetrics(font);
 
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -91,7 +96,6 @@ public class LoggedWindow extends JFrame implements Handle{
                 client.sendData("gethistory" + " " + login + " " + sessionID);
             }
         });
-
         refreshAccountInfoButton.doClick();
     }
 
@@ -128,7 +132,6 @@ public class LoggedWindow extends JFrame implements Handle{
         for(int i=1;i<array.length;i+=5)
             defaultTableModel.addRow(new Object[]{array[i],array[i+1],array[i+2],array[i+3],new Date(Long.parseLong(array[i+4])) });
     }
-
     /**
      * Handle function, which handle server messages
      * @param data Data from server
