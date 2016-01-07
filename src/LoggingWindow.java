@@ -5,24 +5,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-/**
- * Created by ene on 03.01.16.
- */
 
 /**
- * BankClientApplication Window
- * @author Piotr Januszewski
- * @author Adrian Radej
- * @author Monika Stępkowska
+ * Created by arade on 07-Jan-16.
  */
-public class LoggingWindow extends JFrame implements Handle {
-
-    private JButton loginButton;
+public class LoggingWindow extends JFrame implements Handle{
     private JPanel mainPanel;
-    private JList list1;
-    private JLabel loggedLabel;
-    private JTextArea textArea1;
+    private JPanel left;
+    private JPanel center;
     private JButton exitButton;
+    private JButton loginButton;
+    private JList list1;
+    private JTextArea textArea1;
+    private JPanel stepsPanel;
+    private JPanel messagesPanel;
     private JPasswordField passwordField1 = new JPasswordField();
 
     private String login = null;
@@ -30,15 +26,14 @@ public class LoggingWindow extends JFrame implements Handle {
     private String passwordIndexes = null;
     private String peselIndexes = null;
 
+
     private Client client;
 
     private JFrame jFrame;
 
-    /**
-     * Class constructor. Makes safe ssl connection with server and BankClientApplication Window
-     */
+
     public LoggingWindow() {
-        super("BankClientApplication");
+        super("Bank Client Application");
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -52,7 +47,9 @@ public class LoggingWindow extends JFrame implements Handle {
             e.printStackTrace();
         }
 
-        loggedLabel.setForeground(Color.red);
+        list1.setBackground(new Color(240,240,240));
+        textArea1.setBackground(new Color(240,240,240));
+
         setContentPane(mainPanel);
         SwingUtilities.updateComponentTreeUI (mainPanel);
 
@@ -60,12 +57,13 @@ public class LoggingWindow extends JFrame implements Handle {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        list1.addSelectionInterval(1, 1);
+        list1.addSelectionInterval(0, 0);
         textArea1.setForeground(Color.blue);
         jFrame = this;
 
+
         try {
-            client = new Client("127.0.1.1", 7000, this);
+            client = new Client("127.0.0.1", 7000, this);
         } catch (Exception err) {
             err.printStackTrace();
         }
@@ -87,7 +85,7 @@ public class LoggingWindow extends JFrame implements Handle {
             public void actionPerformed(ActionEvent e) {
                 textArea1.setText(null);
 
-                Font font = new Font("Purisa", Font.BOLD, 12);
+                Font font = new Font("Arial", Font.BOLD, 12);
                 UIManager.put("OptionPane.messageFont", font);
                 UIManager.put("OptionPane.buttonFont", font);
 
@@ -95,15 +93,15 @@ public class LoggingWindow extends JFrame implements Handle {
 
                 if (login != null && !login.equals(""))
                     if (login.length() <= 2)
-                        textArea1.setText("Login has a minimum 3 characters \ntry again");
+                        textArea1.setText("Login has a minimum 3 characters \nTry again");
                     else {
                         list1.clearSelection();
-                        list1.addSelectionInterval(2, 2);
+                        list1.addSelectionInterval(1, 1);
                         client.sendData("Login" + " " + login);
                         textArea1.setText("Sent to server");
                     }
                 else
-                    textArea1.setText("Error. You did not enter a Login!");
+                    textArea1.setText("Error.\nYou did not enter a Login!");
             }
         });
         exitButton.addActionListener(new ActionListener() {
@@ -129,46 +127,46 @@ public class LoggingWindow extends JFrame implements Handle {
             textArea1.setText("Message from server: \n");
             textArea1.append(data.substring(data.indexOf(" ")));
             list1.clearSelection();
-            list1.addSelectionInterval(1, 1);
+            list1.addSelectionInterval(0, 0);
         }
         else
-            if (data.contains("PasswordIndexes")) {
-                passwordIndexes = data.split(" ")[1];
+        if (data.contains("PasswordIndexes")) {
+            passwordIndexes = data.split(" ")[1];
+            list1.clearSelection();
+            list1.addSelectionInterval(2, 2);
+
+            password = getPassword(passwordIndexes,jFrame);
+
+            if(password != null) {
+                client.sendData("Password" + " " + login + " " + password + " " + passwordIndexes);
                 list1.clearSelection();
                 list1.addSelectionInterval(3, 3);
+            }else {
+                list1.clearSelection();
+                list1.addSelectionInterval(0, 0);
+                textArea1.setText("You canceled log in operation");
+            }
+        } else if (data.contains("PESELIndexes")) {
+            peselIndexes = data.split(" ")[1];
+            list1.clearSelection();
+            list1.addSelectionInterval(4, 4);
 
-                password = getPassword(passwordIndexes,jFrame);
+            String peselNumbers = getPeselNumbers(peselIndexes,jFrame);
 
-                if(password != null) {
-                    client.sendData("Password" + " " + login + " " + password + " " + passwordIndexes);
-                    list1.clearSelection();
-                    list1.addSelectionInterval(4, 4);
-                }else {
-                    list1.clearSelection();
-                    list1.addSelectionInterval(1, 1);
-                    textArea1.setText("You canceled log in operation");
-                }
-            } else if (data.contains("PESELIndexes")) {
-                peselIndexes = data.split(" ")[1];
+            if(peselNumbers != null){
+                client.sendData("PESELNumbers" + " " + login + " " + password + " " + passwordIndexes + " " + peselNumbers + " " + peselIndexes);
                 list1.clearSelection();
                 list1.addSelectionInterval(5, 5);
-
-                String peselNumbers = getPeselNumbers(peselIndexes,jFrame);
-
-                if(peselNumbers != null){
-                    client.sendData("PESELNumbers" + " " + login + " " + password + " " + passwordIndexes + " " + peselNumbers + " " + peselIndexes);
-                    list1.clearSelection();
-                    list1.addSelectionInterval(6, 6);
-                    textArea1.setText("Sent to server");
-                }else {
-                    list1.clearSelection();
-                    list1.addSelectionInterval(1, 1);
-                    textArea1.setText("You canceled log in operation");
-                }
-            } else if (data.contains("LoggedIn")) {
-                dispose();
-                LoggedWindow loggedWindow = new LoggedWindow(login, client, data.split(" ")[1]);
+                textArea1.setText("Sent to server");
+            }else {
+                list1.clearSelection();
+                list1.addSelectionInterval(0, 0);
+                textArea1.setText("You canceled log in operation");
             }
+        } else if (data.contains("LoggedIn")) {
+            dispose();
+            LoggedWindow loggedWindow = new LoggedWindow(login, client, data.split(" ")[1]);
+        }
         return null;
     }
 
@@ -195,7 +193,8 @@ public class LoggingWindow extends JFrame implements Handle {
             if (ok == JOptionPane.OK_OPTION) {
                 password = new String(passwordField1.getPassword());
             } else {
-                list1.addSelectionInterval(1, 1);
+                list1.clearSelection();
+                list1.addSelectionInterval(0, 0);
                 textArea1.setText("Error - you clicked cancel");
             }
 
@@ -204,7 +203,7 @@ public class LoggingWindow extends JFrame implements Handle {
                 textArea1.setText("Sent to server");
             } else {
                 list1.clearSelection();
-                list1.addSelectionInterval(1, 1);
+                list1.addSelectionInterval(0, 0);
                 textArea1.setText("Error - you clicked cancel");
             }
             passwordField1.setText(null);
@@ -236,7 +235,7 @@ public class LoggingWindow extends JFrame implements Handle {
                 numbers = new String(passwordField1.getPassword());
             } else {
                 list1.clearSelection();
-                list1.addSelectionInterval(1, 1);
+                list1.addSelectionInterval(0, 0);
                 textArea1.setText("Error - you clicked cancel");
             }
 
@@ -244,7 +243,7 @@ public class LoggingWindow extends JFrame implements Handle {
                 response = numbers;
             } else {
                 list1.clearSelection();
-                list1.addSelectionInterval(1, 1);
+                list1.addSelectionInterval(0, 0);
                 textArea1.setText("Error - you did not enter numbers");
             }
             passwordField1.setText(null);
@@ -252,4 +251,7 @@ public class LoggingWindow extends JFrame implements Handle {
         }
         return response;
     }
+
+
+
 }

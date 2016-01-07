@@ -2,26 +2,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 /**
- * Created by ene on 05.01.16.
- */
-
-/**
- * Window where user can make transfers
- * @author Piotr Januszewski
- * @author Adrian Radej
- * @author Monika Stępkowska
+ * Created by arade on 07-Jan-16.
  */
 public class TransferWindow extends JFrame{
-
-    private JTextField textField1;
-    private JTextField textField2;
-    private JButton doTransferButton;
     private JPanel mainPanel;
+    private JPanel south;
+    private JPanel north;
     private JButton cancelButton;
-    private JTextArea textArea1;
+    private JButton transferButton;
+    private JTextField textField1;
+    private JLabel errorLabel;
+    private JTextField textField2;
+
     private Client client;
     private String login;
     private String sessionID;
@@ -49,14 +43,14 @@ public class TransferWindow extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        textArea1.setForeground(Color.red);
+        errorLabel.setForeground(Color.red);
 
         this.client = client1;
         this.login = login1;
         this.sessionID = sessionID1;
         jFrame = jFrame1;
 
-        doTransferButton.addActionListener(new ActionListener() {
+        transferButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textField2.selectAll();
@@ -70,7 +64,7 @@ public class TransferWindow extends JFrame{
                     Integer.parseInt(textField2.getSelectedText());
                     isNumber = true;
                 }catch (Exception er){
-                    textArea1.setText("Money not entered correctly \nTry again");
+                    errorLabel.setText("Money was not entered correctly.");
                 }
 
                 if(isDouble)
@@ -81,11 +75,11 @@ public class TransferWindow extends JFrame{
                             dispose();
                         }
                         else
-                            textArea1.setText("Error. You not entered number.\nTry again");
+                            errorLabel.setText("Error. Bad value in amount field.");
                     else
-                        textArea1.setText("Error. Account number has 26 digits.\nTry again");
+                        errorLabel.setText("Error. Account number has 26 digits.");
                 else
-                    textArea1.setText("Error. You not entered number.\nTry again");
+                    errorLabel.setText("Error. Account Number is not correct.");
             }
         });
 
@@ -96,4 +90,5 @@ public class TransferWindow extends JFrame{
             }
         });
     }
+
 }

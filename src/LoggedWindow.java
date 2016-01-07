@@ -1,29 +1,25 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Date;
 
 /**
- * Created by ene on 04.01.16.
- */
-/**
-  * Window where user is logged in correctly and now can do transfers and gets history of his transfers
- * @author Piotr Januszewski
- * @author Adrian Radej
- * @author Monika Stępkowska
+ * Created by arade on 07-Jan-16.
  */
 public class LoggedWindow extends JFrame implements Handle{
+    private JPanel main;
+    private JPanel north;
+    private JPanel south;
+    private JPanel center;
+    private JButton refreshButton;
+    private JButton transferButton;
+    private JButton historyButton;
     private JTable table1;
-    private JPanel mainPanel;
     private JButton logoutButton;
     private JLabel label1;
     private JScrollPane scrollPane1;
-    private JButton refreshAccountInfoButton;
-    private JButton doTransferButton;
-    private JButton getHistoryButton;
     private DefaultTableModel defaultTableModel;
 
     private String login;
@@ -45,7 +41,7 @@ public class LoggedWindow extends JFrame implements Handle{
      */
     public LoggedWindow(String login1, Client client1, String sessionId){
         super("BankClientApplication");
-        setContentPane(mainPanel);
+        setContentPane(main);
         pack();
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,20 +53,15 @@ public class LoggedWindow extends JFrame implements Handle{
         this.sessionID = sessionId;
         this.client.changeHandle(this);
 
-        label1.setForeground(Color.red);
-        label1.setText("Logged in as: " + login);
+        label1.setText("  Logged in as: " + login);
 
         defaultTableModel = new DefaultTableModel();
         defaultTableModel.addColumn("Account Informations");
         defaultTableModel.addColumn("Values");
 
-        Font font = new Font("Purisa", Font.BOLD, 12);
-
         table1.setModel(defaultTableModel);
         table1.setAutoCreateRowSorter(true);
         table1.setAutoCreateRowSorter(true);
-        table1.setFont(font);
-        table1.getFontMetrics(font);
 
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -78,25 +69,25 @@ public class LoggedWindow extends JFrame implements Handle{
                 client.sendData("Logout" + " " + login + " " + sessionID);
             }
         });
-        refreshAccountInfoButton.addActionListener(new ActionListener() {
+        refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 client.sendData("getaccount" + " " + login + " " + sessionID);
             }
         });
-        doTransferButton.addActionListener(new ActionListener() {
+        transferButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TransferWindow transferWindow = new TransferWindow(client,login,sessionID,jFrame);
             }
         });
-        getHistoryButton.addActionListener(new ActionListener() {
+        historyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 client.sendData("gethistory" + " " + login + " " + sessionID);
             }
         });
-        refreshAccountInfoButton.doClick();
+        refreshButton.doClick();
     }
 
     /**
@@ -171,4 +162,6 @@ public class LoggedWindow extends JFrame implements Handle{
         }
         return null;
     }
+
+
 }
