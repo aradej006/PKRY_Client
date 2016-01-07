@@ -64,7 +64,7 @@ public class LoggedWindow extends JFrame implements Handle{
         defaultTableModel.addColumn("Account Informations");
         defaultTableModel.addColumn("Values");
 
-        Font font = new Font("Purisa", Font.BOLD, 12);
+        Font font = new Font("Arial", Font.BOLD, 12);
 
         table1.setModel(defaultTableModel);
         table1.setAutoCreateRowSorter(true);

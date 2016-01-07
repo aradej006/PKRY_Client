@@ -87,7 +87,7 @@ public class LoggingWindow extends JFrame implements Handle {
             public void actionPerformed(ActionEvent e) {
                 textArea1.setText(null);
 
-                Font font = new Font("Purisa", Font.BOLD, 12);
+                Font font = new Font("Arial", Font.BOLD, 12);
                 UIManager.put("OptionPane.messageFont", font);
                 UIManager.put("OptionPane.buttonFont", font);
 
@@ -95,7 +95,7 @@ public class LoggingWindow extends JFrame implements Handle {
 
                 if (login != null && !login.equals(""))
                     if (login.length() <= 2)
-                        textArea1.setText("Login has a minimum 3 characters \ntry again");
+                        textArea1.setText("Login has a minimum 3 characters \nTry again");
                     else {
                         list1.clearSelection();
                         list1.addSelectionInterval(2, 2);
@@ -103,7 +103,7 @@ public class LoggingWindow extends JFrame implements Handle {
                         textArea1.setText("Sent to server");
                     }
                 else
-                    textArea1.setText("Error. You did not enter a Login!");
+                    textArea1.setText("Error.\nYou did not enter a Login!");
             }
         });
         exitButton.addActionListener(new ActionListener() {

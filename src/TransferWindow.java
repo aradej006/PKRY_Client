@@ -21,6 +21,7 @@ public class TransferWindow extends JFrame{
     private JButton doTransferButton;
     private JPanel mainPanel;
     private JButton cancelButton;
+    private JLabel errorLabel;
     private JTextArea textArea1;
     private Client client;
     private String login;
@@ -49,7 +50,7 @@ public class TransferWindow extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        textArea1.setForeground(Color.red);
+        errorLabel.setForeground(Color.red);
 
         this.client = client1;
         this.login = login1;
@@ -70,7 +71,7 @@ public class TransferWindow extends JFrame{
                     Integer.parseInt(textField2.getSelectedText());
                     isNumber = true;
                 }catch (Exception er){
-                    textArea1.setText("Money not entered correctly \nTry again");
+                    errorLabel.setText("Money not entered correctly \nTry again");
                 }
 
                 if(isDouble)
@@ -81,11 +82,11 @@ public class TransferWindow extends JFrame{
                             dispose();
                         }
                         else
-                            textArea1.setText("Error. You not entered number.\nTry again");
+                            errorLabel.setText("Error. You not entered number.\nTry again");
                     else
-                        textArea1.setText("Error. Account number has 26 digits.\nTry again");
+                        errorLabel.setText("Error. Account number has 26 digits.\nTry again");
                 else
-                    textArea1.setText("Error. You not entered number.\nTry again");
+                    errorLabel.setText("Error. You not entered number.\nTry again");
             }
         });
 
