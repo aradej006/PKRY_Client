@@ -6,6 +6,12 @@ import java.awt.event.ActionListener;
 /**
  * Created by arade on 07-Jan-16.
  */
+/**
+ * Window where user can make transfers
+ * @author Piotr Januszewski
+ * @author Adrian Radej
+ * @author Monika Stępkowska
+ */
 public class TransferWindow extends JFrame{
     private JPanel mainPanel;
     private JPanel south;

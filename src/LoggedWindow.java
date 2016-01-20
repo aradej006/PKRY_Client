@@ -8,6 +8,12 @@ import java.util.Date;
 /**
  * Created by arade on 07-Jan-16.
  */
+/**
+ * Window where user is logged in correctly and now can do transfers and gets history of his transfers
+ * @author Piotr Januszewski
+ * @author Adrian Radej
+ * @author Monika Stępkowska
+ */
 public class LoggedWindow extends JFrame implements Handle{
     private JPanel main;
     private JPanel north;

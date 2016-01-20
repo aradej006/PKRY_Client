@@ -9,6 +9,12 @@ import java.io.IOException;
 /**
  * Created by arade on 07-Jan-16.
  */
+/**
+ * BankClientApplication Window
+ * @author Piotr Januszewski
+ * @author Adrian Radej
+ * @author Monika Stępkowska
+ */
 public class LoggingWindow extends JFrame implements Handle{
     private JPanel mainPanel;
     private JPanel left;
@@ -31,7 +37,9 @@ public class LoggingWindow extends JFrame implements Handle{
 
     private JFrame jFrame;
 
-
+    /**
+     * Class constructor. Makes BankClientApplication Window and safe ssl connection with server
+     */
     public LoggingWindow() {
         super("Bank Client Application");
 
