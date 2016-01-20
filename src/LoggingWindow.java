@@ -42,7 +42,6 @@ public class LoggingWindow extends JFrame implements Handle{
      */
     public LoggingWindow() {
         super("Bank Client Application");
-
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
@@ -71,7 +70,7 @@ public class LoggingWindow extends JFrame implements Handle{
 
 
         try {
-            client = new Client("127.0.0.1", 7000, this);
+            client = new Client("localhost", 7000, this);
         } catch (Exception err) {
             err.printStackTrace();
         }
@@ -126,7 +125,7 @@ public class LoggingWindow extends JFrame implements Handle{
     }
 
     /**
-     * Handle function, which handle server messages
+     * Handle function, which handle server messages.
      * @param data Data from server
      * @return null
      */
